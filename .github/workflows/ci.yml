@@ -1,0 +1,25 @@
+name: Vulnerable CI with tj-actions/changed-files
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  vulnerable-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get changed files (Vulnerable)
+        id: changed-files
+        uses: tj-actions/changed-files@v0.12.0  # Vulnerable version (pre-patch)
+        with:
+          dir: './'
+
+      - name: Process changed files
+        run: |
+          echo "Changed files:"
+          echo "${{ steps.changed-files.outputs.files_changed }}"
+          # Additional processing logic here
